@@ -43,4 +43,8 @@ public class CalculadoraNota {
     private boolean atingiuSomaMinimaParaAI(double a1, double a2, double a3) {
         return a1 + a3 >= SOMA_MINIMA_AI || a2 + a3 >= SOMA_MINIMA_AI;
     }
+
+    public double aplicarAI(double a1, double a2, double a3, double notaAI) {
+        return 0;
+    }
 }
