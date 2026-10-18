@@ -5,9 +5,13 @@ public class CalculadoraNota {
     public static final double NOTA_MINIMA_APROVACAO = 70;
     public static final double NOTA_MAXIMA_A1_A2 = 30;
     public static final double NOTA_MAXIMA_A3 = 40;
+    public static final double NOTA_MAXIMA_AI = 30;
     public static final double FREQUENCIA_MINIMA = 75;
     public static final double SOMA_MINIMA_AI = 40;
-    public static final double NOTA_MAXIMA_AI = 30;
+
+    public static final String APROVADO = "APROVADO";
+    public static final String REPROVADO_POR_FALTA = "REPROVADO POR FALTA";
+    public static final String REPROVADO_POR_NOTA = "REPROVADO POR NOTA";
 
     public double calcularNotaFinal(double a1, double a2, double a3) {
         validarNota(a1, NOTA_MAXIMA_A1_A2, "A1");
@@ -20,21 +24,14 @@ public class CalculadoraNota {
         return notaFinal >= NOTA_MINIMA_APROVACAO;
     }
 
-    private void validarNota(double nota, double notaMaxima, String nomeAvaliacao) {
-        if (nota < 0 || nota > notaMaxima) {
-            throw new IllegalArgumentException(
-                nomeAvaliacao + " deve estar entre 0 e " + notaMaxima);
-        }
-    }
-
     public String situacao(double notaFinal, double frequencia) {
         if (frequencia < FREQUENCIA_MINIMA) {
-            return "REPROVADO POR FALTA";
+            return REPROVADO_POR_FALTA;
         }
         if (estaAprovadoPorNota(notaFinal)) {
-            return "APROVADO";
+            return APROVADO;
         }
-        return "REPROVADO POR NOTA";
+        return REPROVADO_POR_NOTA;
     }
 
     public boolean podeFazerAI(double a1, double a2, double a3, double frequencia) {
@@ -42,10 +39,6 @@ public class CalculadoraNota {
         return !estaAprovadoPorNota(notaFinal)
             && frequencia >= FREQUENCIA_MINIMA
             && atingiuSomaMinimaParaAI(a1, a2, a3);
-    }
-
-    private boolean atingiuSomaMinimaParaAI(double a1, double a2, double a3) {
-        return a1 + a3 >= SOMA_MINIMA_AI || a2 + a3 >= SOMA_MINIMA_AI;
     }
 
     public double aplicarAI(double a1, double a2, double a3, double notaAI) {
@@ -58,5 +51,16 @@ public class CalculadoraNota {
             return calcularNotaFinal(notaAI, a2, a3);
         }
         return calcularNotaFinal(a1, notaAI, a3);
+    }
+
+    private boolean atingiuSomaMinimaParaAI(double a1, double a2, double a3) {
+        return a1 + a3 >= SOMA_MINIMA_AI || a2 + a3 >= SOMA_MINIMA_AI;
+    }
+
+    private void validarNota(double nota, double notaMaxima, String nomeAvaliacao) {
+        if (nota < 0 || nota > notaMaxima) {
+            throw new IllegalArgumentException(
+                nomeAvaliacao + " deve estar entre 0 e " + notaMaxima);
+        }
     }
 }
