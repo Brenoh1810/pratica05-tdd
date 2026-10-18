@@ -7,6 +7,7 @@ public class CalculadoraNota {
     public static final double NOTA_MAXIMA_A3 = 40;
     public static final double FREQUENCIA_MINIMA = 75;
     public static final double SOMA_MINIMA_AI = 40;
+    public static final double NOTA_MAXIMA_AI = 30;
 
     public double calcularNotaFinal(double a1, double a2, double a3) {
         validarNota(a1, NOTA_MAXIMA_A1_A2, "A1");
@@ -45,8 +46,9 @@ public class CalculadoraNota {
     }
 
     public double aplicarAI(double a1, double a2, double a3, double notaAI) {
-        validarNota(notaAI, 30, "AI");
-        if (notaAI <= Math.min(a1, a2)) {
+        validarNota(notaAI, NOTA_MAXIMA_AI, "AI");
+        double menorNota = Math.min(a1, a2);
+        if (notaAI <= menorNota) {
             return calcularNotaFinal(a1, a2, a3);
         }
         if (a1 <= a2) {
