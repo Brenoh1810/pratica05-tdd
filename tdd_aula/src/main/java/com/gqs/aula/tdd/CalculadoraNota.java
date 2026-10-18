@@ -45,6 +45,13 @@ public class CalculadoraNota {
     }
 
     public double aplicarAI(double a1, double a2, double a3, double notaAI) {
-        return 0;
+        validarNota(notaAI, 30, "AI");
+        if (notaAI <= Math.min(a1, a2)) {
+            return calcularNotaFinal(a1, a2, a3);
+        }
+        if (a1 <= a2) {
+            return calcularNotaFinal(notaAI, a2, a3);
+        }
+        return calcularNotaFinal(a1, notaAI, a3);
     }
 }
